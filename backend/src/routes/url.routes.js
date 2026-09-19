@@ -44,4 +44,24 @@ router.get("/", async function (req,res){
     })
 })
 
+
+router.delete("/:id", async function (req, res){
+    const {id} =  req.params;
+    const url =  await urlModel.findById(id)
+    if(!url){
+        return re.status(404).json({
+            message: "URL not found"
+        })
+    };
+
+    await urlModel.findOneAndDelete({
+        _id:id
+    })
+
+    return res.status(200).json({
+        message: "URL deleted successfully"
+    })
+})
+
+
 export default router;
